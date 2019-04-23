@@ -53,10 +53,13 @@
             font-weight: 600;
         }
         .mycard {
-            padding: 40px 15px 10px;
+            padding: 40px 30px 10px;
             border-radius: 4px;
             box-shadow: rgba(0, 0, 0, 0.02) 0 5px 15px 1px;
             background: #FFF;
+        }
+        input[type="text"] {
+            text-align: center;
         }
         aside {
             color: #999;
@@ -77,20 +80,45 @@
                             <h3 class="text-center mb-3">Search by fingerprint</h3>
                             <div class="text-center col-12 col-lg-10 offset-lg-1">
                                 <div class="form-group text-center" style="width: 100%;">
-                                    <input class="form-control mb-3" type="text" name="fingerprint" id="js-Input-Fingerprint" placeholder="5200DF38" style="">
+                                    <input class="form-control mb-3" type="text" maxlength="8" name="fingerprint" id="js-Input-Fingerprint" placeholder="5200DF38" style="">
                                     <aside class="mb-3">
                                         8-digit hex, case-insensitive
                                     </aside>
                                     <button class="btn btn-primary mx-sm-3 mb-3" type="button" name="button" id="js-Button-SearchFingerprint" style="width: 180px;">Search</button>
                                 </div>
                                 <script type="text/javascript">
-                                document.querySelector('#js-Button-SearchFingerprint').addEventListener('click', function () {
+                                var Button_SearchFingerprint_click_eventHandler = function () {
                                     var inputField = document.querySelector('#js-Input-Fingerprint');
                                     location.href = '/#0x' + inputField.value.toLowerCase();
+                                };
+                                document.querySelector('#js-Button-SearchFingerprint').addEventListener('click', Button_SearchFingerprint_click_eventHandler);
+                                document.querySelector("#js-Input-Fingerprint").addEventListener('keyup', function (e) {
+                                    if (e.keyCode == 13) {
+                                        Button_SearchFingerprint_click_eventHandler()
+                                    }
+                                });
+                                </script>
+                            </div>
+                            <div style="background: #DDD; height: 1px;"></div>
+                            <h3 class="text-center mt-4 mb-3">Your short URL</h3>
+                            <div class="text-center col-12 col-lg-10 offset-lg-1">
+                                <div class="form-group text-center" style="width: 100%;">
+                                    <input class="form-control mb-3" type="text" name="fingerprint" id="js-InputReadonly-ShortUrl" value="https://pgp.to/#0x????????" style="" readonly>
+                                    <aside class="mb-3">
+                                        Sharing made easier
+                                    </aside>
+                                </div>
+                                <script type="text/javascript">
+                                document.querySelector('#js-Input-Fingerprint').addEventListener('input', function () {
+                                    var rightPad = function (str, len) { return str + ((new Array(8-str.length)).fill('?').join('')) };
+                                    document.querySelector('#js-InputReadonly-ShortUrl').value = `https://pgp.to/#0x${ rightPad(document.querySelector('#js-Input-Fingerprint').value.toUpperCase(), 8) }`;
                                 });
                                 </script>
                             </div>
                         </div>
+
+                        <!-- <div class="mycard mt-5">
+                        </div> -->
 
                         <div class="mycard mt-5">
                             <h3 class="text-center mb-3">Search by name or email</h3>
@@ -103,9 +131,15 @@
                                     <button class="btn btn-primary mx-sm-3 mb-3" type="button" name="button" id="js-Button-SearchName" style="width: 180px;">Search</button>
                                 </div>
                                 <script type="text/javascript">
-                                document.querySelector('#js-Button-SearchName').addEventListener('click', function () {
+                                var Button_SearchName_click_eventHandler = function () {
                                     var inputField = document.querySelector('#js-Input-Name');
                                     location.href = '/#' + inputField.value.replace(/\s+/g, '+').toLowerCase();
+                                };
+                                document.querySelector('#js-Button-SearchName').addEventListener('click', Button_SearchName_click_eventHandler);
+                                document.querySelector("#js-Input-Name").addEventListener('keyup', function (e) {
+                                    if (e.keyCode == 13) {
+                                        Button_SearchName_click_eventHandler()
+                                    }
                                 });
                                 </script>
                             </div>
