@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8" />
+        <title>PGP.to — Find the right public key</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <!-- For Google -->
+        <meta name="description" content="Find the right public key." />
+        <meta name="keywords" content="PGP,Keyserver,key server" />
+        <meta name="author" content="Neruthes" />
+        <meta name="application-name" content="PGP.to" />
+
+        <!-- For Facebook -->
+        <meta property="og:title" content="PGP.to — Find the right public key" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://pgp.to/img/fb-share-banner.png" />
+        <meta property="og:url" content="https://pgp.to/" />
+        <meta property="og:description" content="Find the right public key." />
+
+        <!-- For Twitter -->
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Maskbook — Find the right public key" />
+        <meta name="twitter:description" content="Find the right public key." />
+        <meta name="twitter:image" content="https://pgp.to/apple-touch-icon.png" />
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <style media="screen">
+        html, body {
+            font-family: -apple-system;
+            font-size: 16px;
+            background: #FAFAFA;
+        }
+        input, button {
+            font-size: 18px;
+        }
+        h1 {
+            font-size: 30px;
+            font-weight: 800;
+        }
+        h2 {
+            font-size: 24px;
+            font-weight: 400;
+        }
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .mycard {
+            padding: 40px 15px 10px;
+            border-radius: 4px;
+            box-shadow: rgba(0, 0, 0, 0.02) 0 5px 15px 1px;
+            background: #FFF;
+        }
+        aside {
+            color: #999;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-6 offset-lg-3">
+                        <header>
+                            <h1 class="text-center mt-5">PGP.to</h1>
+                            <h2 class="text-center mb-5">Find the right public key</h2>
+                        </header>
+
+                        <div class="mycard mt-5">
+                            <h3 class="text-center mb-3">Search by fingerprint</h3>
+                            <div class="text-center col-12 col-lg-10 offset-lg-1">
+                                <div class="form-group text-center" style="width: 100%;">
+                                    <input class="form-control mb-3" type="text" name="fingerprint" id="js-Input-Fingerprint" placeholder="5200DF38" style="">
+                                    <aside class="mb-3">
+                                        8-digit hex, case-insensitive
+                                    </aside>
+                                    <button class="btn btn-primary mx-sm-3 mb-3" type="button" name="button" id="js-Button-SearchFingerprint" style="width: 180px;">Search</button>
+                                </div>
+                                <script type="text/javascript">
+                                document.querySelector('#js-Button-SearchFingerprint').addEventListener('click', function () {
+                                    var inputField = document.querySelector('#js-Input-Fingerprint');
+                                    location.href = '/#0x' + inputField.value.toLowerCase();
+                                });
+                                </script>
+                            </div>
+                        </div>
+
+                        <div class="mycard mt-5">
+                            <h3 class="text-center mb-3">Search by name or email</h3>
+                            <div class="text-center col-12 col-lg-10 offset-lg-1">
+                                <div class="form-group text-center" style="width: 100%;">
+                                    <input class="form-control mb-3" type="text" name="fingerprint" id="js-Input-Name" placeholder="Yisi Liu" style="">
+                                    <aside class="mb-3">
+                                        Name or email address, case-insensitive
+                                    </aside>
+                                    <button class="btn btn-primary mx-sm-3 mb-3" type="button" name="button" id="js-Button-SearchName" style="width: 180px;">Search</button>
+                                </div>
+                                <script type="text/javascript">
+                                document.querySelector('#js-Button-SearchName').addEventListener('click', function () {
+                                    var inputField = document.querySelector('#js-Input-Name');
+                                    location.href = '/#' + inputField.value.replace(/\s+/g, '+').toLowerCase();
+                                });
+                                </script>
+                            </div>
+                        </div>
+
+                        <footer class="">
+                            <div class="text-center mt-5 mb-5">
+                                © 2019<script type="text/javascript">
+                                (function (year) {
+                                    document.write(year > 2019 ? ('-' + year) : '');
+                                })((new Date()).getFullYear());
+                                </script> <a href="//joyneop.xyz/">Neruthes</a>.<br /><a href="//github.com/neruthes/pgp.to">Source code</a> under <a href="https://www.gnu.org/licenses/agpl.html">AGPL 3.0</a>.
+                            </div>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

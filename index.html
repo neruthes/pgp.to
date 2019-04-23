@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8" />
+        <title>PGP.to</title>
+        <meta http-equiv="refresh" content="0;url=/home/" />
+    </head>
+    <body>
+        <script type="text/javascript">
+        (function () {
+            // Routing
+            if (location.hash === '' || location.hash === '#') {
+                // Go to /home/
+                // location.assign('/home/');
+            } else if (location.hash.match(/^\#0x([0-9A-F]{8}|[0-9A-F]{40})$/i)) {
+                // Search by fingerprint
+                location.assign(`https://keyserver.ubuntu.com/pks/lookup?search=${location.hash.slice(1)}&fingerprint=on&op=vindex`);
+            } else if (location.hash.match(/^\#[^0]+$/i)) {
+                // Search by name
+                location.assign(`https://keyserver.ubuntu.com/pks/lookup?search=${location.hash.slice(1)}&fingerprint=on&op=vindex`);
+            };
+        })();
+        </script>
+    </body>
+</html>
