@@ -67,7 +67,7 @@
         }
         </style>
     </head>
-    <body>
+    <body data-card1-input-validity="false">
         <div class="">
             <div class="container">
                 <div class="row">
@@ -81,9 +81,9 @@
                             <h3 class="text-center mb-3">Search by fingerprint</h3>
                             <div class="text-center col-12 col-lg-10 offset-lg-1">
                                 <div class="form-group text-center" style="width: 100%;">
-                                    <input class="form-control mb-3" type="text" maxlength="8" pattern="[0-9A-Fa-f]{8}" name="fingerprint" id="js-Input-Fingerprint" placeholder="5200DF38" style="">
+                                    <input class="form-control mb-3" type="text" maxlength="50" name="fingerprint" id="js-Input-Fingerprint" placeholder="5200DF38" style="" autofocus>
                                     <aside class="mb-3">
-                                        8-digit hex, case-insensitive
+                                        8, 16, or 40 digits in hexadecimal
                                     </aside>
                                     <button class="btn btn-primary mx-sm-3 mb-3" type="button" name="button" id="js-Button-SearchFingerprint" style="width: 180px;">Search</button>
                                 </div>
@@ -95,8 +95,23 @@
                                 document.querySelector('#js-Button-SearchFingerprint').addEventListener('click', Button_SearchFingerprint_click_eventHandler);
                                 document.querySelector("#js-Input-Fingerprint").addEventListener('keyup', function (e) {
                                     if (e.keyCode == 13) {
-                                        Button_SearchFingerprint_click_eventHandler()
-                                    }
+                                        Button_SearchFingerprint_click_eventHandler();
+                                    };
+                                });
+                                document.querySelector("#js-Input-Fingerprint").addEventListener('input', function (e) {
+                                    var inputField = document.querySelector('#js-Input-Fingerprint');
+                                    inputField.value = inputField.value.replace(/^0x/, '').toUpperCase().replace(/[^0-9A-Za-z]/g, '');
+                                    if (!inputField.value.match(/^([0-9A-Fa-f]{8}|[0-9A-Fa-f]{16}|[0-9A-Fa-f]{40})$/)) {
+                                        document.body.setAttribute('data-card1-input-validity', 'false');
+                                        document.querySelector('#js-Button-SearchFingerprint').disabled = true;
+                                        document.querySelector('#js-InputReadonly-ShortUrl').disabled = true;
+                                        document.querySelector('#js-Button-SearchFingerprint').setAttribute('class', 'btn btn-secondary mx-sm-3 mb-3');
+                                    } else {
+                                        document.body.setAttribute('data-card1-input-validity', 'true');
+                                        document.querySelector('#js-Button-SearchFingerprint').disabled = false;
+                                        document.querySelector('#js-InputReadonly-ShortUrl').disabled = false;
+                                        document.querySelector('#js-Button-SearchFingerprint').setAttribute('class', 'btn btn-primary mx-sm-3 mb-3');
+                                    };
                                 });
                                 </script>
                             </div>
@@ -104,14 +119,21 @@
                             <h3 class="text-center mt-4 mb-3">Your short URL</h3>
                             <div class="text-center col-12 col-lg-10 offset-lg-1">
                                 <div class="form-group text-center" style="width: 100%;">
-                                    <input class="form-control mb-3" type="text" name="fingerprint" id="js-InputReadonly-ShortUrl" value="https://pgp.to/#0x????????" style="" readonly>
+                                    <input class="form-control mb-3" type="text" name="fingerprint" id="js-InputReadonly-ShortUrl" value="https://pgp.to/#0x????????" style="" onclick="this.setSelectionRange(0, this.value.length)" disabled readonly>
                                     <aside class="mb-3">
-                                        Sharing made easier
+                                        <style media="screen">
+                                        [data-card1-input-validity="true"] #js-Card1Footer-forValid {}
+                                        [data-card1-input-validity="true"] #js-Card1Footer-forInvalid { display: none; }
+                                        [data-card1-input-validity="false"] #js-Card1Footer-forValid { display: none; }
+                                        [data-card1-input-validity="false"] #js-Card1Footer-forInvalid {}
+                                        </style>
+                                        <span id="js-Card1Footer-forValid" style="color: #2C8;">Copy to share</span>
+                                        <span id="js-Card1Footer-forInvalid" style="color: #C33;">Invalid query string</span>
                                     </aside>
                                 </div>
                                 <script type="text/javascript">
                                 document.querySelector('#js-Input-Fingerprint').addEventListener('input', function () {
-                                    var rightPad = function (str, len) { return str + ((new Array(8-str.length)).fill('?').join('')) };
+                                    var rightPad = function (str, len) { if (str.length < len) { return str + ((new Array(8-str.length)).fill('?').join('')); } else { return str; }; };
                                     document.querySelector('#js-InputReadonly-ShortUrl').value = `https://pgp.to/#0x${ rightPad(document.querySelector('#js-Input-Fingerprint').value.toUpperCase(), 8) }`;
                                 });
                                 </script>
