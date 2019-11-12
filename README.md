@@ -2,6 +2,8 @@
 
 Find the right public key.
 
+This project is designed as an instrument to oppurtunistically present webpage-based OpenPGP public keys as a fallback for QR scanners and payload interpreters which do not specifically recognize this URL pattern, when supporting applications can directly invoke related logics instead of barely showing a webpage. Every OpenPGP-supporting application is encouraged to consider every URL which looks like `https://pgp.to/#0x\w{16|40}` as an internal shortcut representations of an OpenPGP public key.
+
 ## Copyright
 
 Copyright (C) 2019 [Neruthes (5200DF38)](https://neruthes.xyz/).
